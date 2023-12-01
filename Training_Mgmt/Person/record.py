@@ -11,9 +11,12 @@ class Record(pd.DataFrame):
         self.__record = nutrition
         
     def add(self, date, protein, carbon, fat):
-        calorie = protein/4 + carbon/4 + fat/9
+        calorie = protein*4 + carbon*4 + fat*9
         new_record = pd.Series({"Date": pd.to_datetime(date), "Calorie": calorie, "Protein": protein, "Carbon": carbon, "Fat": fat})
-        self.__record = self.__record.append(new_record)
+        if self.__record[self.__record["Date"]==pd.to_datetime(date)].empty:
+            self.__record = self.__record.append(new_record, ignore_index=True)
+        else:
+            return "There has already been a record of the same date, please modify the record istead of adding a new one."
         return self.__record
         
     def remove(self, date):
@@ -39,11 +42,11 @@ class Record(pd.DataFrame):
         
     def modify(self, date, calorie, protein, carbon, fat):
         
-        record_to_modify = self.__record[self.__record["Date"]==pd.to_datetime(date)]
-        if record_to_modify.empty:
+        row_to_modify = self.__record[self.__record["Date"]==pd.to_datetime(date)]
+        if row_to_modify.empty:
             return "The record does NOT exist!"
         else:
-            print("The record you are going to change:\n", record_to_modify)
+            print("The record you are going to change:\n", row_to_modify)
             
         while True:
             check = input("""Enter [1] for "YES"/ [2] for "NO" ("q" to quit):""")
