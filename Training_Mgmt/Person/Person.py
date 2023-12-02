@@ -5,7 +5,7 @@ class Person:
     
     def __init__(self, name, bdate, height, weight, gender, purpose, freq):
         self.__name = name
-        self.__bdate = datetime.datetime.strptime(bdate, '%Y/%m/%d')
+        self.__bdate = datetime.datetime.strptime(bdate, '%Y-%m-%d')
         self.__height = height
         self.__weight = weight
         self.__gender = gender
