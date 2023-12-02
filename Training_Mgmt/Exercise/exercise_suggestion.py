@@ -1,4 +1,4 @@
-import exercise
+import Exercise.exercise_suggestion
 import random
 exercise = exercise.Exercise("easy", "chest")
 

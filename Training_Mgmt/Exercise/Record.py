@@ -1,6 +1,4 @@
-import datetime
 import pandas as pd
-import pygal
 from IPython.display import display
 from IPython.core.display import HTML
 import os
@@ -99,9 +97,9 @@ class Record():
 
 
 # record = Record()
-# record.add([{"date": "2023-11-23", "exercise_name": "bench press",
-#                 "exercise_set": "5", "exercise_rep": "5"}, {"date": "2023-11-23", "exercise_name": "shoulder press",
+# record.add([{"date": "2023-11-24", "exercise_name": "bench press",
+#                 "exercise_set": "5", "exercise_rep": "5"}, {"date": "2023-11-24", "exercise_name": "shoulder press",
 #                 "exercise_set": "4", "exercise_rep": "12"}])
 
-# record.remove_by_index(1)
-# record.modify(1, {"exercise_name": "updated exercise", "exercise_set": "6"})
+# record.remove_by_index(3)
+# record.modify(2, {"exercise_name": "updated exercise", "exercise_set": "12"})
