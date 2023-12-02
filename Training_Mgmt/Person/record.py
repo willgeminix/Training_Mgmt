@@ -12,19 +12,21 @@ class Record(pd.DataFrame):
         
     def add(self, date, protein, carbon, fat):
         calorie = protein*4 + carbon*4 + fat*9
-        new_record = pd.Series({"Date": pd.to_datetime(date), "Calorie": calorie, "Protein": protein, "Carbon": carbon, "Fat": fat})
-        if self.__record[self.__record["Date"]==pd.to_datetime(date)].empty:
+        new_record = pd.Series({"Date": pd.to_datetime(date).date(), "Calorie": calorie, "Protein": protein, "Carbon": carbon, "Fat": fat})
+        if self.__record[self.__record["Date"]==pd.to_datetime(date).date()].empty:
             new_data = self.__record.append(new_record, ignore_index=True)
         else:
-            return "There has already been a record of the same date, please modify the record istead of adding a new one."
+            print("There has already been a record of the same date, please modify the record istead of adding a new one.")
+            return Record(self.__record)
         return Record(new_data)
 
 
     def remove(self, date):
         
-        record_to_remove = self.__record[self.__record["Date"]==pd.to_datetime(date)]
+        record_to_remove = self.__record[self.__record["Date"]==pd.to_datetime(date).date()]
         if record_to_remove.empty:
-            return "The record does NOT exist!"
+            print("The record does NOT exist!")
+            return Record(self.__record)
         else:
             print("Are you sure you want to delete the following record?\n",record_to_remove)
             
@@ -33,29 +35,30 @@ class Record(pd.DataFrame):
             if check == "1":
                 break
             elif check == "2" or check == "q":
-                return None
+                return Record(self.__record)
             else:
                 print("Invalid input, please re-enter.")
                 continue
                 
-        new_data = self.__record[~(self.__record["Date"] == pd.to_datetime(date))]
+        new_data = self.__record[~(self.__record["Date"] == pd.to_datetime(date).date())]
         return Record(new_data)
     
         
     def modify(self, date, protein, carbon, fat):
         
-        row_to_modify = self.__record[self.__record["Date"]==pd.to_datetime(date)]
+        row_to_modify = self.__record[self.__record["Date"] == date]
         if row_to_modify.empty:
-            return "The record does NOT exist!"
+            print("The record does NOT exist! Please check and try again!")
+            return Record(self.__record)
         else:
             print("The record you are going to change:\n", row_to_modify)
             
         while True:
-            check = input("""Enter [1] for "YES"/ [2] for "NO" ("q" to quit):""")
+            check = input("[1] for YES\n[2] for NO and return to the previous menu\nChoice:")
             if check == "1":
                 break
             elif check == "2" or check == "q":
-                return None
+                return Record(self.__record)
             else:
                 print("Invalid input, please re-enter.")
                 continue
@@ -73,7 +76,7 @@ class Record(pd.DataFrame):
     
     def show(self, start_date, end_date, indicator=1):
         
-        condition = (self.__record["Date"] >= pd.to_datetime(start_date)) & (self.__record["Date"] <= pd.to_datetime(end_date))
+        condition = (self.__record["Date"] >= start_date) & (self.__record["Date"] <= end_date)
         row_to_display = self.__record[condition]
         if row_to_display.empty:
             return "There is NO record between the selected dates." 

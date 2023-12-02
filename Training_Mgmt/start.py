@@ -39,7 +39,6 @@ def start():
     
     
     while True:
-        print(type(record_nutrition))
         choice_1 = input('What do you want to do:\n[1]: Calculate Nutrition\n[2]: Access the Nutrition Record\n[3]: Exercise Suggestion\n[4]: Access Exercise Record\n[5]: Change Person information\n[6]: Exit\nChoice:')
         if choice_1 not in ['1', '2', '3', '4','5','6']:
             print("Invalid choice, please try again.")
@@ -49,7 +48,7 @@ def start():
             record_nutrition.to_csv(os.getcwd()+"\\"+str(person.name)+"_nutrition.csv", index=False)
             record_exercise.to_csv(os.getcwd()+"\\"+str(person.name)+"_exercise.csv")
             print("Thank you for using, see you!")
-            return None
+            return
         elif choice_1 == '1':
             bmr = calculate.bmr(person)
             tdee = calculate.tdee(person)
@@ -72,11 +71,10 @@ def start():
                     carbon = get_float_input("Please enter the carbon (in g): ")
                     fat = get_float_input("Please enter the fat (in g): ")
                     record_nutrition = record_nutrition.add(new_date, protein, carbon, fat)
-                    print(record_nutrition)
                     continue
                 elif choice_2 == '3':
-                    new_date = get_date("Please enter the date of the newly added record: ")
-                    change = input("Which indicators do you want to change?(Calories will be calculated automatically)\n[1]: Protein\n[2]: Carbon\n[3]: Fat\nChoice(For more than one indicators, seperate the number with ','):")
+                    new_date = get_date("Please enter the date of the record to modify: ")
+                    change = input("Which indicators do you want to change?(Calories will be calculated automatically)\n[1]: Protein\n[2]: Carbon\n[3]: Fat\nFor more than one indicators, seperate the number with ','\nChoice:")
                     change = change.split(',')
                     protein, carbon, fat = '', '', ''
                     for each in change:
@@ -170,14 +168,14 @@ def get_float_input(prompt):
 def get_date(prompt):
     while True:
         new_date = input(prompt)
-        re_bdate = r'\d{4}/\d{2}/\d{2}'
+        re_bdate = r'\d{4}-\d{2}-\d{2}'
         if not re.match(re_bdate, new_date):
             print("The date does not follow the required format, please check and try again.")
             continue
         elif new_date[5:7] not in ['01','02','03','04','05','06','07','08','09','10','11','12']:
             print("The MONTH does NOT align with the format, please check and enter again.")
             continue
-        elif (not new_date[9:].isnumeric()) or (int(new_date[9:])<=0) or (int(new_date[9:])>31):
+        elif (not new_date[8:].isnumeric()) or (int(new_date[8:])<=0) or (int(new_date[8:])>31):
             print("The DAY does NOT align with the format, please check and enter again.")
             continue
         else:
