@@ -5,7 +5,7 @@ class Person:
     
     def __init__(self, name, bdate, height, weight, gender, purpose, freq):
         self.__name = name
-        self.__bdate = datetime.datetime(int(bdate[0]), int(bdate[1]), int(bdate[2]))
+        self.__bdate = datetime.datetime.strptime(bdate, '%Y/%m/%d')
         self.__height = height
         self.__weight = weight
         self.__gender = gender
@@ -26,7 +26,7 @@ class Person:
     
     @height.setter
     def height(self, value):
-        self.__height = height
+        self.__height = value
     
     @property
     def weight(self):
@@ -46,7 +46,7 @@ class Person:
     
     @purpose.setter
     def purpose(self, value):
-        self.__purpose = purpose
+        self.__purpose = value
         
     @property
     def frequency(self):

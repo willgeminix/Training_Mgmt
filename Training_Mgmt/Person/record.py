@@ -14,11 +14,12 @@ class Record(pd.DataFrame):
         calorie = protein*4 + carbon*4 + fat*9
         new_record = pd.Series({"Date": pd.to_datetime(date), "Calorie": calorie, "Protein": protein, "Carbon": carbon, "Fat": fat})
         if self.__record[self.__record["Date"]==pd.to_datetime(date)].empty:
-            self.__record = self.__record.append(new_record, ignore_index=True)
+            new_data = self.__record.append(new_record, ignore_index=True)
         else:
             return "There has already been a record of the same date, please modify the record istead of adding a new one."
-        return self.__record
-        
+        return Record(new_data)
+
+
     def remove(self, date):
         
         record_to_remove = self.__record[self.__record["Date"]==pd.to_datetime(date)]
@@ -37,10 +38,11 @@ class Record(pd.DataFrame):
                 print("Invalid input, please re-enter.")
                 continue
                 
-        self.__record = self.__record[~(self.__record["Date"] == pd.to_datetime(date))]
-        return self.__record
+        new_data = self.__record[~(self.__record["Date"] == pd.to_datetime(date))]
+        return Record(new_data)
+    
         
-    def modify(self, date, calorie, protein, carbon, fat):
+    def modify(self, date, protein, carbon, fat):
         
         row_to_modify = self.__record[self.__record["Date"]==pd.to_datetime(date)]
         if row_to_modify.empty:
@@ -58,17 +60,16 @@ class Record(pd.DataFrame):
                 print("Invalid input, please re-enter.")
                 continue
         
-        if calorie != '':
-            self.__record.loc[row_to_modify.index[0], ("Calorie",)] = calorie
         if protein != '':
             self.__record.loc[row_to_modify.index[0], ("Protein",)] = protein
         if carbon != '':
             self.__record.loc[row_to_modify.index[0], ("Carbon",)] = carbon
         if fat != '':
             self.__record.loc[row_to_modify.index[0], ("Fat",)] = fat
-            
-        return self.__record
-    
+        self.__record.loc[row_to_modify.index[0], ("Calorie",)] = self.__record.loc[row_to_modify.index[0], ("Protein",)]*4 + self.__record.loc[row_to_modify.index[0], ("Carbon",)]*4 + self.__record.loc[row_to_modify.index[0], ("Fat",)]*9
+        new_data = self.__record
+        return Record(new_data)   
+
     
     def show(self, start_date, end_date, indicator=1):
         
