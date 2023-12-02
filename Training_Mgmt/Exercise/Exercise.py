@@ -1,5 +1,6 @@
 import datetime
 import pandas as pd
+import random
 
 
 class Exercise:
@@ -8,20 +9,16 @@ class Exercise:
         # intensity_level is how hard the user want to train
         self.__intensity_level = intensity_level
         self.__body_part = body_part
-        chest_list = [
-            "bench press",
-            "incline bench press",
-            "dumbell flat bench press",
-            "dumbell incline bench press",
-            "dip push up",
-            "pec deck flys",
-            "dumbbell flys",
-            "chest press",
-            "cable crossover",
-            "push-up variations",
-            "svend press",
-            "guillotine press"
-        ]
+        self.chest_exercises = {
+            "bench press": "https://www.youtube.com/watch?v=4Y2ZdHCOXok&pp=ygULYmVuY2ggcHJlc3M%3D",
+            "incline bench press": "https://www.youtube.com/watch?v=SrqOu55lrYU&pp=ygUTaW5jbGluZSBiZW5jaCBwcmVzcw%3D%3D",
+            "dumbell flat bench press": "https://www.youtube.com/watch?v=QsYre__-aro&pp=ygUYZHVtYmVsbCBmbGF0IGJlbmNoIHByZXNz",
+            "dumbell incline bench press": "https://www.youtube.com/watch?v=8iPEnn-ltC8&pp=ygUbZHVtYmVsbCBpbmNsaW5lIGJlbmNoIHByZXNz",
+            "dip push up": "https://www.youtube.com/watch?v=ybjGSN9IwaA&pp=ygULZGlwIHB1c2ggdXA%3D",
+            "pec deck flys": "https://www.youtube.com/shorts/g3T7LsEeDWQ",
+            "cable crossover": "https://www.youtube.com/watch?v=taI4XduLpTk&pp=ygUPY2FibGUgY3Jvc3NvdmVy",
+        }
+
         shoulder_list = [
             "overhead press",
             "lateral raise",
@@ -100,3 +97,10 @@ class Exercise:
     @body_part.setter
     def __body_part(self, value):
         self.__body_part = value
+
+    def strength_suggestion(self):
+        if self.__intensity_level == "easy":
+            random_keys = random.sample(list(chest_exercises.keys()), 3)
+            random_exercises = {
+                key: chest_exercises[key] for key in random_keys}
+        print(random_exercises)
