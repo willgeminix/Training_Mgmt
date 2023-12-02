@@ -12,8 +12,8 @@ class Record(pd.DataFrame):
         
     def add(self, date, protein, carbon, fat):
         calorie = protein*4 + carbon*4 + fat*9
-        new_record = pd.Series({"Date": pd.to_datetime(date).date(), "Calorie": calorie, "Protein": protein, "Carbon": carbon, "Fat": fat})
-        if self.__record[self.__record["Date"]==pd.to_datetime(date).date()].empty:
+        new_record = pd.Series({"Date": date, "Calorie": calorie, "Protein": protein, "Carbon": carbon, "Fat": fat})
+        if self.__record[self.__record["Date"] == date].empty:
             new_data = self.__record.append(new_record, ignore_index=True)
         else:
             print("There has already been a record of the same date, please modify the record istead of adding a new one.")
@@ -23,7 +23,7 @@ class Record(pd.DataFrame):
 
     def remove(self, date):
         
-        record_to_remove = self.__record[self.__record["Date"]==pd.to_datetime(date).date()]
+        record_to_remove = self.__record[self.__record["Date"] == date]
         if record_to_remove.empty:
             print("The record does NOT exist!")
             return Record(self.__record)
@@ -31,16 +31,16 @@ class Record(pd.DataFrame):
             print("Are you sure you want to delete the following record?\n",record_to_remove)
             
         while True:
-            check = input("""Enter [1] for "YES"/ [2] for "NO" ("q" to quit):""")
+            check = input("""Enter [1] for "YES"\n[2] for "NO and quit")\nChoice:""")
             if check == "1":
                 break
-            elif check == "2" or check == "q":
+            elif check == "2":
                 return Record(self.__record)
             else:
                 print("Invalid input, please re-enter.")
                 continue
                 
-        new_data = self.__record[~(self.__record["Date"] == pd.to_datetime(date).date())]
+        new_data = self.__record[~(self.__record["Date"] == date)]
         return Record(new_data)
     
         
