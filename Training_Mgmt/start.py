@@ -40,7 +40,7 @@ def start():
     
     while True:
         choice_1 = input('What do you want to do:\n[1]: Calculate Nutrition\n[2]: Access the Nutrition Record\n[3]: Exercise Suggestion\n[4]: Access Exercise Record\n[5]: Change Person information\n[6]: Exit\nChoice:')
-        if choice_1 not in ['1', '2', '3', '4','5','6']:
+        if choice_1 not in ['1', '2', '3', '4', '5', '6']:
             print("Invalid choice, please try again.")
             continue
         elif choice_1 == '6':
@@ -72,6 +72,10 @@ def start():
                     fat = get_float_input("Please enter the fat (in g): ")
                     record_nutrition = record_nutrition.add(new_date, protein, carbon, fat)
                     continue
+                elif choice_2 == '2':
+                    new_date = get_date("Please enter the date of the record to modify: ")
+                    record_nutrition = record_nutrition.remove(new_date)
+                    continue
                 elif choice_2 == '3':
                     new_date = get_date("Please enter the date of the record to modify: ")
                     change = input("Which indicators do you want to change?(Calories will be calculated automatically)\n[1]: Protein\n[2]: Carbon\n[3]: Fat\nFor more than one indicators, seperate the number with ','\nChoice:")
@@ -85,11 +89,12 @@ def start():
                         else:
                             fat = get_float_input("Please enter the fat (in g): ")
                     record_nutrition = record_nutrition.modify(new_date, protein, carbon, fat)
-                    print(record_nutrition)
                     continue
-
                 elif choice_2 == '4':
-                    pass
+                    start_date = get_date("Please enter the start date: ")
+                    end_date = get_date("Please enter the end date: ")
+                    record_nutrition.show(start_date, end_date)
+                    continue
             continue
 
 def create():
@@ -102,7 +107,7 @@ def create():
         else:
             break
 
-    bdate = get_date("Please enter the birthdate of the newly added record:")
+    bdate = get_date("Please enter the birthdate of the newly added record (YYYY-MM-DD):")
 
     while True:
         height = input("Please enter the height (cm):")
@@ -133,7 +138,7 @@ def create():
             break
 
     while True:
-        purpose = input("Please enter the purpose ['1' for bulking, '2' for cutting]:")
+        purpose = input("Please enter the purpose [1] for bulking\n[2] for cutting]:")
         if purpose not in ['1', '2']:
             print("The purpose is NOT correct, please check and try again.")
             continue
@@ -145,7 +150,7 @@ def create():
             break
 
     while True:
-        freq = input("Please choose the frequecy of exercise.\n['1': No exercise\n'2': 1-2 times per week\n'3': 3-4 times per week\n'4': 5-6 times per week\n'5': more than 6 times per week]\nPlease choose:")
+        freq = input("Please choose the frequecy of exercise.\n[1]: No exercise\n[2]: 1-2 times per week\n[3]: 3-4 times per week\n[4]: 5-6 times per week\n[5]: more than 6 times per week\nPlease choose:")
         if freq not in ['1', '2', '3', '4', '5']:
             print('The frequency is NOT correct, please check and try again.')
             continue
