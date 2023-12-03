@@ -5,7 +5,6 @@ import re
 from Person import Person, calculate, record
 from Exercise import Record as Exercise_Record
 
-
 def start():
 
     try:
@@ -96,7 +95,7 @@ def start():
                     continue
                 elif choice_2 == '2':
                     new_date = get_date(
-                        "Please enter the date of the record to modify: ")
+                        "Please enter the date of the record to delete: ")
                     record_nutrition = record_nutrition.remove(new_date)
                     continue
                 elif choice_2 == '3':
@@ -104,6 +103,15 @@ def start():
                         "Please enter the date of the record to modify: ")
                     change = input(
                         "Which indicators do you want to change?(Calories will be calculated automatically)\n[1]: Protein\n[2]: Carbon\n[3]: Fat\nFor more than one indicators, seperate the number with ','\nChoice:")
+                    valid_formats = [r"\d+,\d+,\d+", r"\d+,\d+", r"^\d+"]
+                    valid = False
+                    for each in valid_formats:
+                        if re.match(each, change):
+                            valid = True
+                            break
+                    if not valid:
+                        print("Invalid format, please check and try again!")
+                        continue
                     change = change.split(',')
                     protein, carbon, fat = '', '', ''
                     for each in change:
@@ -113,10 +121,14 @@ def start():
                         elif each == '2':
                             carbon = get_float_input(
                                 "Please enter the carbon (in g): ")
-                        else:
+                        elif each == '3':
                             fat = get_float_input(
                                 "Please enter the fat (in g): ")
-                    record_nutrition = record_nutrition.modify(
+                        else:
+                            valid = False
+                            print("Invalid choice, please check and try again!")
+                    if valid:
+                        record_nutrition = record_nutrition.modify(
                         new_date, protein, carbon, fat)
                     continue
                 elif choice_2 == '4':
