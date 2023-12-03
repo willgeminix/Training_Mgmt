@@ -3,13 +3,18 @@ from IPython.display import display
 from IPython.core.display import HTML
 import os
 
+from Person import Person
 
+
+# exercise record class
 class Record():
 
-    def __init__(self):
-        self.csv_file = 'example.csv'
+    def __init__(self, person):
+        self.person = person
+        self.csv_file = person.name+"_exercise.csv"
 
     def add(self, list_of_dicts):
+
         if not list_of_dicts:
             return
 
@@ -56,7 +61,8 @@ class Record():
 
         # Check if the adjusted index exists in the DataFrame
         if adjusted_index not in df.index:
-            print(f"Index {index} not found in the CSV file.")
+            print(
+                f"Index {index} entry not found in the CSV file, removing operation failed")
             return
 
         # Remove the row with the specified adjusted index
@@ -95,6 +101,13 @@ class Record():
         # Write the modified DataFrame back to the CSV file
         df.to_csv(self.csv_file, index=False)
 
+    def display(self):
+        df = pd.read_csv(self.csv_file)
+        print(df.to_string(index=False))
+
+    def test(self):
+        print(self.person.name)
+        print(self.csv_file)
 
 # record = Record()
 # record.add([{"date": "2023-11-24", "exercise_name": "bench press",

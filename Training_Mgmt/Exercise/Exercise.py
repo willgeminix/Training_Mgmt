@@ -3,7 +3,7 @@ import pandas as pd
 import random
 
 
-class Exercise:
+class Exercise():
 
     def __init__(self, intensity_level, body_part):
         self.__intensity_level = intensity_level
