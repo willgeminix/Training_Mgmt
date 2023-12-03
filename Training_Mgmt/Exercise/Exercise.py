@@ -5,9 +5,9 @@ import random
 
 class Exercise():
 
-    def __init__(self, intensity_level, body_part):
+    def __init__(self, intensity_level, body_part=None):
         self.__intensity_level = intensity_level
-        self.__body_part = body_part
+        self.__body_part = body_part if body_part is not None else []
 
         self.chest_exercises = {
             "bench press": "https://www.youtube.com/watch?v=4Y2ZdHCOXok&pp=ygULYmVuY2ggcHJlc3M%3D",

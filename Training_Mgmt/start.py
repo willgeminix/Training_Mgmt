@@ -116,7 +116,7 @@ def start():
                     record_nutrition.show(start_date, end_date)
                     continue
             continue
-        # exercise part
+        # exercise part, recording
         elif choice_1 == '4':
             while True:
                 choice_2 = input(
@@ -169,6 +169,53 @@ def start():
                     exercise_record.display()
                     continue
             continue
+        # exercise part, suggestion
+        elif choice_1 == '3':
+            intensity_level_choice = input(
+                "Please choose the intensity level:\n[1]: easy\n[2]: medium\n[3]: hard\nChoice: ")
+            if intensity_level_choice not in ['1', '2', '3']:
+                print("Invalid choice, please try again.")
+                continue
+            else:
+                intensity_dict = {'1': 'easy', '2': 'medium',
+                                  '3': 'hard'}
+                intensity_level_choice = intensity_dict[intensity_level_choice]
+            type_of_exericise_choice = input(
+                "What kind of sports suggestion do you want to ask:\n[1]: Strength\n[2]: Cardio\n[3]: Hybrid\nChoice: ")
+            if type_of_exericise_choice not in ['1', '2', '3']:
+                print("Invalid choice, please try again.")
+                continue
+
+            # strength suggestion
+            elif type_of_exericise_choice == '1':
+                while True:
+                    body_parts = input(
+                        "Please choose the body part(s):\n[1]: Chest\n[2]: Shoulder\n[3]: Back\n[4]: Legs\n[5]: Triceps\n[6]: Biceps\nIf you want to train multiple body parts, use ',' to separate, e.g. 1,2,3\nHowever, note that you can't choose more than 3 parts at once, it would be an inappropriate training way\nChoice: ")
+                    body_part_lst = body_parts.split(',')
+                    if len(body_part_lst) > 3:
+                        print(
+                            "You can't choose more than 3 body parts! Please try again.")
+                        continue
+                    for element in body_part_lst:
+                        # verify if input is number
+                        if element.strip().isdigit():
+                            num = int(element.strip())
+                            if num < 1 or num > 6:
+                                print(
+                                    f"Invalid entry: {element}. Please enter a number between 1 and 6. Please try again")
+                                continue
+                            break
+                        else:
+                            print(
+                                f"Invalid entry: {element}. Please enter the number")
+                            continue
+
+            # cardio suggestion
+            elif type_of_exericise_choice == '2':
+                print("cardio suggestion")
+            # hybrid suggestion
+            elif type_of_exericise_choice == '3':
+                print("hybrid suggestion")
 
 
 def create():
