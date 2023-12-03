@@ -5,7 +5,29 @@ import random
 
 class Exercise():
 
+    """
+    This class represents exercise recommendations based on intensity level and body parts.
+
+    Attributes:
+        __intensity_level (str): The intensity level of exercise, can be "easy", "medium", or "hard".
+        __body_part (list): List of body parts to target during strength exercises.
+        chest_exercises (dict): Dictionary of chest exercises with links to video demonstrations.
+        shoulder_exercises (dict): Dictionary of shoulder exercises with links to video demonstrations.
+        back_exercises (dict): Dictionary of back exercises with links to video demonstrations.
+        legs_exercises (dict): Dictionary of leg exercises with links to video demonstrations.
+        biceps_exercises (dict): Dictionary of biceps exercises with links to video demonstrations.
+        triceps_exercises (dict): Dictionary of triceps exercises with links to video demonstrations.
+        cardio_list (list): List of cardio exercises.
+    """
+
     def __init__(self, intensity_level, body_part=None):
+        """
+        Initialize an Exercise object with given intensity level and optional body parts.
+
+        Args:
+            intensity_level (str): The intensity level of exercise, can be "easy", "medium", or "hard".
+            body_part (list, optional): List of body parts to target during strength exercises.
+        """
         self.__intensity_level = intensity_level
         self.__body_part = body_part if body_part is not None else []
 
@@ -90,21 +112,51 @@ class Exercise():
 
     @property
     def intensity_level(self):
+        """
+        Get the intensity level of exercise.
+
+        Returns:
+            str: The intensity level ("easy", "medium", or "hard").
+        """
         return self.__intensity_level
 
     @intensity_level.setter
     def intensity_level(self, value):
+        """
+        Set the intensity level of exercise.
+
+        Args:
+            value (str): The new intensity level to set.
+        """
         self.__intensity_level = value
 
     @property
     def body_part(self):
+        """
+        Get the list of body parts for strength exercises.
+
+        Returns:
+            list: List of body parts.
+        """
         return self.__body_part
 
     @body_part.setter
     def body_part(self, value):
+        """
+        Set the list of body parts for strength exercises.
+
+        Args:
+            value (list): The new list of body parts.
+        """
         self.__body_part = value
 
     def strength_suggestion(self):
+        """
+        Generate strength exercise recommendations based on intensity level and body parts.
+
+        Returns:
+            dict: A dictionary of recommended strength exercises with video links.
+        """
         exercise_num = 0
         if self.__intensity_level == "easy":
             exercise_num = 5
@@ -119,6 +171,12 @@ class Exercise():
             return "Error, have to do a list"
 
     def cardio_suggestion(self):
+        """
+        Generate cardio exercise recommendations based on intensity level.
+
+        Returns:
+            dict: A dictionary of recommended cardio exercises with recommended exercise duration (in minutes).
+        """
         exercise_min = 0
         if self.__intensity_level == "easy":
             exercise_min = 30
@@ -127,10 +185,16 @@ class Exercise():
         elif self.__intensity_level == "hard":
             exercise_min = 60
 
-        random_exercise = random.choice(self.cardio_list)  # 随机选择一个运动
+        random_exercise = random.choice(self.cardio_list) 
         return {random_exercise: exercise_min}
 
     def hybrid_suggestion(self):
+        """
+        Generate hybrid exercise recommendations combining strength and cardio based on intensity level.
+
+        Returns:
+            list: A list containing recommended strength exercises and a dictionary of cardio exercise and duration.
+        """
         exercise_num = 0
         exercise_min = 0
         if self.__intensity_level == "easy":
@@ -143,10 +207,19 @@ class Exercise():
             exercise_num = 5
             exercise_min = 40
         stength_choices = self.strength_choices_helper(exercise_num)
-        random_cardio_exercise = random.choice(self.cardio_list)  # 随机选择一个运动
+        random_cardio_exercise = random.choice(self.cardio_list) 
         return [stength_choices, {random_cardio_exercise: exercise_min}]
 
     def strength_choices_helper(self, exercise_num):
+        """
+        Helper method to generate random strength exercise recommendations based on body parts.
+
+        Args:
+            exercise_num (int): The total number of recommended strength exercises.
+
+        Returns:
+            dict: A dictionary of recommended strength exercises with video links.
+        """
         exercises_per_part = exercise_num // len(self.__body_part)
         remaining_exercises = exercise_num % len(self.__body_part)
         random_exercises = {}

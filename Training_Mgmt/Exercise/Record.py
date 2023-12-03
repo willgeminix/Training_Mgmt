@@ -9,12 +9,35 @@ from Person import Person
 # exercise record class
 class Record():
 
+    """
+    This class represents an exercise record for a person. It allows adding, removing, modifying,
+    and displaying exercise data stored in a CSV file.
+
+    Attributes:
+        person (Person): The person associated with this exercise record.
+        csv_file (str): The name of the CSV file used to store exercise data.
+    """
+
     def __init__(self, person):
+        """
+        Initialize an Exercise Record object.
+
+        Args:
+            person (Person): The person associated with this exercise record.
+        """
         self.person = person
         self.csv_file = person.name+"_exercise.csv"
 
     def add(self, list_of_dicts):
+        """
+        Add exercise data to the record.
 
+        Args:
+            list_of_dicts (list): A list of dictionaries containing exercise data.
+
+        Notes:
+            - Each dictionary should contain keys such as "date," "exercise_name," "exercise_set," and "exercise_rep."
+        """
         if not list_of_dicts:
             return
 
@@ -45,6 +68,15 @@ class Record():
         df.to_csv(self.csv_file, mode='a', index=False, header=not file_exists)
 
     def remove_by_index(self, index):
+        """
+        Remove exercise data from the record by index.
+
+        Args:
+            index (int): The index of the exercise data to be removed (1-based index).
+
+        Notes:
+            - The index specifies the entry to be removed from the record.
+        """
         # Check if the CSV file exists
         if not os.path.isfile(self.csv_file):
             print("CSV file does not exist.")
@@ -75,6 +107,17 @@ class Record():
         df.to_csv(self.csv_file, index=False)
 
     def modify(self, index, updates):
+        """
+        Modify exercise data in the record.
+
+        Args:
+            index (int): The index of the exercise data to be modified (1-based index).
+            updates (dict): A dictionary containing the updated exercise data.
+
+        Notes:
+            - The index specifies the entry to be modified.
+            - The updates dictionary should contain keys matching the exercise data columns to be updated.
+        """
         # Check if the CSV file exists
         if not os.path.isfile(self.csv_file):
             print("CSV file does not exist.")
@@ -102,12 +145,12 @@ class Record():
         df.to_csv(self.csv_file, index=False)
 
     def display(self):
+        """
+        Display the exercise data stored in the record.
+        """
         df = pd.read_csv(self.csv_file)
         print(df.to_string(index=False))
 
-    def test(self):
-        print(self.person.name)
-        print(self.csv_file)
 
 # record = Record()
 # record.add([{"date": "2023-11-24", "exercise_name": "bench press",
