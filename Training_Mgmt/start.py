@@ -1,10 +1,3 @@
-import os
-import pandas as pd
-import re
-
-from Person import Person, calculate, record
-from Exercise import Record as Exercise_Record
-
 def start():
 
     try:

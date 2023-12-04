@@ -3,7 +3,7 @@ from IPython.display import display
 from IPython.core.display import HTML
 import os
 
-from Person import Person
+from Training_Mgmt.Person import Person
 
 
 # exercise record class
