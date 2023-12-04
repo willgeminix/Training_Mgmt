@@ -1,3 +1,13 @@
+import os
+import sys
+import pandas as pd
+import re
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from Training_Mgmt.Person import Person, calculate, record
+from Training_Mgmt.Exercise import Record as Exercise_Record
+
 def start():
 
     try:
@@ -127,7 +137,11 @@ def start():
                 elif choice_2 == '4':
                     start_date = get_date("Please enter the start date: ")
                     end_date = get_date("Please enter the end date: ")
-                    record_nutrition.show(start_date, end_date)
+                    indicator = input("What indicators do you want to display:\n[1] Calories\n[2] Protein, Carbon and Fat\nChoice:")
+                    if indicator not in ["1", '2']:
+                        print('Invalid Input, please check and try again!')
+                        continue
+                    record_nutrition.show(start_date, end_date, int(indicator))
                     continue
             continue
 
