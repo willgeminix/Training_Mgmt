@@ -1,9 +1,8 @@
 import pandas as pd
-from IPython.display import display
-from IPython.core.display import HTML
 import os
 
-from Training_Mgmt.Person import Person
+# from Training_Mgmt.Person import Person
+from Person import Person
 
 
 # exercise record class

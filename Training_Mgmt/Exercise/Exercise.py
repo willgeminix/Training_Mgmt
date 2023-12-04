@@ -32,13 +32,13 @@ class Exercise():
         self.__body_part = body_part if body_part is not None else []
 
         self.chest_exercises = {
-            "bench press": "https://www.youtube.com/watch?v=4Y2ZdHCOXok&pp=ygULYmVuY2ggcHJlc3M%3D",
-            "incline bench press": "https://www.youtube.com/watch?v=SrqOu55lrYU&pp=ygUTaW5jbGluZSBiZW5jaCBwcmVzcw%3D%3D",
-            "dumbell flat bench press": "https://www.youtube.com/watch?v=QsYre__-aro&pp=ygUYZHVtYmVsbCBmbGF0IGJlbmNoIHByZXNz",
-            "dumbell incline bench press": "https://www.youtube.com/watch?v=8iPEnn-ltC8&pp=ygUbZHVtYmVsbCBpbmNsaW5lIGJlbmNoIHByZXNz",
-            "dip push up": "https://www.youtube.com/watch?v=ybjGSN9IwaA&pp=ygULZGlwIHB1c2ggdXA%3D",
-            "pec deck flys": "https://www.youtube.com/shorts/g3T7LsEeDWQ",
-            "cable crossover": "https://www.youtube.com/watch?v=taI4XduLpTk&pp=ygUPY2FibGUgY3Jvc3NvdmVy",
+            "BENCH PRESS [5*5]": "https://www.youtube.com/watch?v=4Y2ZdHCOXok&pp=ygULYmVuY2ggcHJlc3M%3D",
+            "INCLINE BENCH PRESS [5*5]": "https://www.youtube.com/watch?v=SrqOu55lrYU&pp=ygUTaW5jbGluZSBiZW5jaCBwcmVzcw%3D%3D",
+            "DUMBELL FLAT BENCH PRESS [4*10]": "https://www.youtube.com/watch?v=QsYre__-aro&pp=ygUYZHVtYmVsbCBmbGF0IGJlbmNoIHByZXNz",
+            "DUMBELL INCLINE BENCH PRESS [4*10]": "https://www.youtube.com/watch?v=8iPEnn-ltC8&pp=ygUbZHVtYmVsbCBpbmNsaW5lIGJlbmNoIHByZXNz",
+            "DIP PUSH UP [4*12]": "https://www.youtube.com/watch?v=ybjGSN9IwaA&pp=ygULZGlwIHB1c2ggdXA%3D",
+            "PEC DECK FLYS [5*12]": "https://www.youtube.com/shorts/g3T7LsEeDWQ",
+            "CABLE CROSSOVER [5*12]": "https://www.youtube.com/watch?v=taI4XduLpTk&pp=ygUPY2FibGUgY3Jvc3NvdmVy",
         }
 
         self.shoulder_exercises = {
@@ -185,8 +185,9 @@ class Exercise():
         elif self.__intensity_level == "hard":
             exercise_min = 60
 
-        random_exercise = random.choice(self.cardio_list) 
-        return {random_exercise: exercise_min}
+        random_exercise = random.choice(self.cardio_list)
+        return random_exercise, exercise_min
+        # return {random_exercise: exercise_min}
 
     def hybrid_suggestion(self):
         """
@@ -207,7 +208,7 @@ class Exercise():
             exercise_num = 5
             exercise_min = 40
         stength_choices = self.strength_choices_helper(exercise_num)
-        random_cardio_exercise = random.choice(self.cardio_list) 
+        random_cardio_exercise = random.choice(self.cardio_list)
         return [stength_choices, {random_cardio_exercise: exercise_min}]
 
     def strength_choices_helper(self, exercise_num):
