@@ -62,7 +62,6 @@ def start():
             basic_info.to_csv(str(person.name)+"_person.csv", index=False)
             record_nutrition.to_csv(
                 str(person.name)+"_nutrition.csv", index=False)
-            record_exercise.to_csv(str(person.name)+"_exercise.csv")
             print("Thank you for using, see you!")
             break
 
