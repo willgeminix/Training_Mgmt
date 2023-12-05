@@ -1,10 +1,12 @@
-from Exercise import Record as Exercise_Record
-from Exercise import Exercise
-from Person import Person, calculate, record
+from Training_Mgmt.Person import Person, calculate, record
+from Training_Mgmt.Exercise import Record as Exercise_Record
+from Training_Mgmt.Exercise import Exercise as Exercise
 import os
 import sys
 import pandas as pd
 import re
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 
 def start():
@@ -33,7 +35,7 @@ def start():
             df_nutrition.to_csv(
                 basic_info['Name'][0]+"_nutrition.csv", index=False)
             # create the exercise record file
-            df_exercise = pd.DataFrame({'index': [], 'date': [], 'exercise_name': [
+            df_exercise = pd.DataFrame({'ID': [], 'date': [], 'exercise_name': [
             ], 'exercise_set': [], 'exercise_rep': []})
             df_exercise.to_csv(basic_info['Name']
                                [0]+"_exercise.csv", index=False)
@@ -136,7 +138,12 @@ def start():
                 elif choice_2 == '4':
                     start_date = get_date("Please enter the start date: ")
                     end_date = get_date("Please enter the end date: ")
-                    record_nutrition.show(start_date, end_date)
+                    indicator = input(
+                        "What indicators do you want to display:\n[1] Calories\n[2] Protein, Carbon and Fat\nChoice:")
+                    if indicator not in ["1", '2']:
+                        print('Invalid Input, please check and try again!')
+                        continue
+                    record_nutrition.show(start_date, end_date, int(indicator))
                     continue
             continue
 
@@ -159,46 +166,7 @@ def start():
 
             # strength suggestion
             elif type_of_exericise_choice == '1':
-                bool_flag = True
-                body_part_lst_instance = []
-                body_part_dic = {"1": "chest", "2": "shoulder",
-                                 "3": "back", "4": "leg", "5": "tricep", "6": "bicep"}
-                while bool_flag:
-                    body_parts = input(
-                        "Please choose the body part(s):\n[1]: Chest\n[2]: Shoulder\n[3]: Back\n[4]: Legs\n[5]: Triceps\n[6]: Biceps\nIf you want to train multiple body parts, use ',' to separate, e.g. 1,2,3\nHowever, note that you can't choose more than 3 parts at once, it would be an inappropriate training way\nChoice: ")
-                    body_part_lst = body_parts.split(',')
-                    if len(body_part_lst) > 3:
-                        print(
-                            "You can't choose more than 3 body parts! Please try again.")
-                        continue
-                    for element in body_part_lst:
-                        # verify if input is number
-                        if element.strip().isdigit():
-                            num = int(element.strip())
-                            if num < 1 or num > 6:
-                                print(
-                                    f"Invalid entry: {element}. Please enter a number between 1 and 6. Please try again")
-                                continue
-                            else:   # all correct
-                                body_part_lst_instance.append(
-                                    body_part_dic[element])
-
-                        else:
-                            print(
-                                f"Invalid entry: {element}. Please enter the number")
-                            continue
-                    print(body_part_lst_instance)
-                    exercise = Exercise.Exercise(
-                        intensity_level_choice, body_part_lst_instance)
-                    exercise_result = exercise.strength_suggestion()
-                    print(
-                        "Here are the strength exercises recommended for you Today!!! Enjoy your workout!")
-                    exercise_index = 1
-                    for key, value in exercise_result.items():
-                        print(
-                            f'Exercise {exercise_index}: {key}, Youtube Tutorial Link: {value}')
-                        exercise_index += 1
-                    break
+                strength_helper(intensity_level_choice, 1)
             # cardio suggestion
             elif type_of_exericise_choice == '2':
                 exercise = Exercise.Exercise(intensity_level_choice)
@@ -211,7 +179,8 @@ def start():
                 print()
             # hybrid suggestion
             elif type_of_exericise_choice == '3':
-                print("hybrid suggestion")
+
+                strength_helper(intensity_level_choice, 2)
 
         # function 4: manipulate exercise record
         elif choice_1 == '4':
@@ -227,7 +196,6 @@ def start():
                 # add exercise record
                 elif choice_2 == '1':
                     add_lst = []
-                    exercise_record.test()
                     new_date = get_date(
                         "Please enter the date of the exercise: ")
                     exercise_name = input(
@@ -428,6 +396,78 @@ def get_date(prompt):
             continue
         else:
             return new_date
+
+
+def strength_helper(intensity_level_choice, mode):
+    bool_flag = True
+    body_part_lst_instance = []
+    body_part_dic = {"1": "chest", "2": "shoulder",
+                     "3": "back", "4": "leg", "5": "tricep", "6": "bicep"}
+    while bool_flag:
+        body_parts = input(
+            "Please choose the body part(s):\n[1]: Chest\n[2]: Shoulder\n[3]: Back\n[4]: Legs\n[5]: Triceps\n[6]: Biceps\nIf you want to train multiple body parts, use ',' to separate, e.g. 1,2,3\nHowever, note that you can't choose more than 3 parts at once, it would be an inappropriate training way\nChoice: ")
+        valid_formats = [r"\d+,\d+,\d+", r"\d+,\d+", r"^\d+"]
+        valid = False
+        for each in valid_formats:
+            if re.match(each, body_parts):
+                valid = True
+                break
+        if not valid:
+            print("Invalid format, please check and try again!")
+            continue
+        body_part_lst = body_parts.split(',')
+        if len(body_part_lst) > 3:
+            print(
+                "You can't choose more than 3 body parts! Please try again.")
+            continue
+        for element in body_part_lst:
+            # verify if input is number
+            if element.strip().isdigit():
+                num = int(element.strip())
+                if num < 1 or num > 6 or not (element in body_part_dic):
+                    print(
+                        f"Invalid entry: {element}. Please enter a number between 1 and 6. Please try again")
+                    continue
+                else:   # all correct
+                    body_part_lst_instance.append(
+                        body_part_dic[element])
+                    exercise = Exercise.Exercise(
+                        intensity_level_choice, body_part_lst_instance)
+                    if mode == 1:
+                        exercise_result = exercise.strength_suggestion()
+                        print(
+                            "Here are the strength exercises recommended for you Today!!! Enjoy your workout!")
+                        exercise_index = 1
+                        for key, value in exercise_result.items():
+                            print(
+                                f'Exercise {exercise_index}: {key}, Youtube Tutorial Link: {value}')
+                            exercise_index += 1
+                        bool_flag = False
+                        break
+                    elif mode == 2:
+                        exercise_result = exercise.hybrid_suggestion()
+                        strength = exercise_result[0]
+                        (cardio_exercise,
+                         cardio_min), = exercise_result[1].items()
+                        exercise_index = 1
+                        for key, value in strength.items():
+                            print(
+                                f'Exercise {exercise_index}: {key}, Youtube Tutorial Link: {value}')
+                            exercise_index += 1
+                        cardio_exercise, cardio_min = exercise.cardio_suggestion()
+                        print()
+                        print(
+                            f'Based on your intensity level of {intensity_level_choice}:')
+                        print(
+                            f'The suggested cardio today is {cardio_exercise} for {str(cardio_min)} minutes')
+                        print()
+                        bool_flag = False
+                        break
+
+            else:
+                print(
+                    f"Invalid entry: {element}. Please enter the number")
+                break
 
 
 if __name__ == '__main__':
