@@ -98,7 +98,7 @@ To use this application, run the `start.py` script. The user will be prompted to
 Please ensure that all dependencies are installed before running the application.
 
 ## CI
-![Build_Status (https://app.travis-ci.com/willgeminix/Training_Mgmt.svg?token=buDhdVZJqj5j61LpuHjh&branch=main)](https://travis-ci.org/willgeminix/Training_Mgmt)
+![Build_Status (https://app.travis-ci.com/willgeminix/Training_Mgmt.svg)](https://travis-ci.org/willgeminix/Training_Mgmt)
 
 ## Credit to
 Xing (Will) Xu
