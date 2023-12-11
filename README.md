@@ -1,4 +1,5 @@
-# Training Management Software
+# Training Management Software [![Build Status](https://app.travis-ci.com/willgeminix/Training_Mgmt.svg)](https://app.travis-ci.com/willgeminix/Training_Mgmt)
+
 
 ## Overview
 This software is designed to help users track and manage their health and fitness goals. It consists of several Python modules that work together to provide insights into exercise routines, dietary habits, and overall wellness.
@@ -96,9 +97,6 @@ To use this application, run the `start.py` script. The user will be prompted to
 
 ## Note
 Please ensure that all dependencies are installed before running the application.
-
-## CI
-![Build_Status (https://app.travis-ci.com/willgeminix/Training_Mgmt.svg)](https://travis-ci.org/willgeminix/Training_Mgmt)
 
 ## Credit to
 Xing (Will) Xu
