@@ -4,5 +4,6 @@ python:
 install:
   - pip install pandas
   - pip install pygal
+  - pip install IPython
 script:
   - python test/test_suite.py
