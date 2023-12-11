@@ -3,5 +3,6 @@ python:
   - "3.9"
 install:
   - pip install pandas
+  - pip install pygal
 script:
   - python test/test_suite.py
