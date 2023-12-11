@@ -2,10 +2,13 @@ import unittest
 import random
 import sys
 import os
+import pandas as pd
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import Training_Mgmt.Exercise.Exercise as E
+import Training_Mgmt.Exercise.Record as R
+import Training_Mgmt.Person.Person as P
 
 class TestExercise(unittest.TestCase):
 
@@ -104,6 +107,10 @@ class TestExercise(unittest.TestCase):
         random.seed(6)
         self.assertEqual(self.exercise4.strength_choices_helper(1), {'REVERSE GRIP PUSHDOWN [4*15]': 'https://www.youtube.com/watch?v=o2HRy4ay4rE&pp=ygUVcmV2ZXJzZSBncmlwIHB1c2hkb3du'})
 
+    def tearDown(self) -> None:
+        return super().tearDown()
+
+
 def my_suite():
     suite = unittest.TestSuite()
     result = unittest.TestResult()
@@ -117,6 +124,3 @@ def my_suite():
     print(runner.run(suite))
 
 my_suite()
-# x = E.Exercise('medium', ['leg'])
-# random.seed(1)
-# print(x.cardio_suggestion())
