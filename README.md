@@ -1,4 +1,4 @@
-# Training Management Software [![Build Status](https://app.travis-ci.com/willgeminix/Training_Mgmt.svg)](https://app.travis-ci.com/willgeminix/Training_Mgmt)
+# Training Management Software [![Build Status](https://app.travis-ci.com/willgeminix/Training_Mgmt.svg?token=buDhdVZJqj5j61LpuHjh&branch=main)](https://app.travis-ci.com/willgeminix/Training_Mgmt)
 
 
 ## Overview
