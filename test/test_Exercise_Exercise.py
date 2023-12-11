@@ -110,17 +110,3 @@ class TestExercise(unittest.TestCase):
     def tearDown(self) -> None:
         return super().tearDown()
 
-
-def my_suite():
-    suite = unittest.TestSuite()
-    result = unittest.TestResult()
-    suite.addTest(TestExercise('test_set_intensity'))
-    suite.addTest(TestExercise('test_set_bodypart'))
-    suite.addTest(TestExercise('test_cardio_suggestion'))
-    suite.addTest(TestExercise('test_strength_suggestion'))
-    suite.addTest(TestExercise('test_hybrid_suggestion'))
-    suite.addTest(TestExercise('test_strength_choices_helper'))
-    runner = unittest.TextTestRunner()
-    print(runner.run(suite))
-
-my_suite()

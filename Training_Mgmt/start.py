@@ -20,7 +20,7 @@ def start():
         record_nutrition = record.Record(nutrition_data)
         exercise_record = Exercise_Record.Record(person)
         record_exercise = pd.read_csv(name+"_exercise.csv")
-    except:
+    except FileNotFoundError:
         print('The user does NOT exist')
         check = input(
             "Do you want to create the user?\n[1]: YES\n[q] to quit\n[any] for NO:\nChoice:")
@@ -199,9 +199,9 @@ def start():
                         "Please enter the date of the exercise: ")
                     exercise_name = input(
                         "Please enter the name of the exercise: ")
-                    exercise_set = input(
+                    exercise_set = get_int_input(
                         "Please enter the number of the sets: ")
-                    exercise_rep = input(
+                    exercise_rep = get_int_input(
                         "Please enter the number of the reps: ")
                     add_lst.append({"date": new_date, "exercise_name": exercise_name,
                                     "exercise_set": exercise_set, "exercise_rep": exercise_rep})
@@ -307,7 +307,7 @@ def create():
         try:
             height = int(height)
             break
-        except:
+        except ValueError:
             print("The height should be numeric, please enter again.")
 
     while True:
@@ -315,20 +315,25 @@ def create():
         try:
             weight = int(weight)
             break
-        except:
+        except ValueError:
             print("The weight should be numeric, please enter again.")
 
     while True:
+        class InvalidChoiceError(Exception):
+            pass
         gender = input("Please enter the gender['F'/'M']:")
-        if gender not in ["F", "M"]:
-            print("The gender is NOT correct, please check and try again.")
-            continue
-        elif gender == "F":
-            gender = "Female"
-            break
-        else:
-            gender = "Male"
-            break
+        
+        try:
+            if gender == "F":
+                gender = "Female"
+                break
+            elif gender == 'M':
+                gender = "Male"
+                break
+            elif gender not in ["F", "M"]:
+                raise InvalidChoiceError("The gender is NOT correct, please check and try again.")
+        except InvalidChoiceError as err:
+            print(err)
 
     while True:
         purpose = input(
@@ -361,21 +366,32 @@ def create():
 
 
 def get_int_input(prompt):
+    class InvalidInputError(Exception):
+        pass
+
     while True:
         value = input(prompt)
-        if value.isdigit() or (value.startswith("-") and value[1:].isdigit()):
-            return int(value)
-        else:
-            print("The input should be a valid integer. Please check and try again.")
+        try:
+            if value.isdigit() or (value.startswith("-") and value[1:].isdigit()):
+                return int(value)
+            else:
+                raise InvalidInputError("The input should be a valid integer. Please check and try again.")
+        except InvalidInputError as err:
+            print(err)
 
 
 def get_float_input(prompt):
+    class InvalidInputError(Exception):
+        pass
     while True:
         value = input(prompt)
-        if value.replace(".", "", 1).isdigit():
-            return float(value)
-        else:
-            print("The input should be a valid number. Please check and try again.")
+        try:
+            if value.replace(".", "", 1).isdigit():
+                return float(value)
+            else:
+                raise InvalidInputError("The input should be a valid number. Please check and try again.")
+        except InvalidInputError as err:
+            print(err)
 
 
 def get_date(prompt):

@@ -58,15 +58,3 @@ class TestRecord(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         return 
-
-
-def my_suite():
-    suite = unittest.TestSuite()
-    result = unittest.TestResult()
-    suite.addTest(TestRecord('test_add'))
-    suite.addTest(TestRecord('test_remove_by_index'))
-    suite.addTest(TestRecord('test_modify'))
-    runner = unittest.TextTestRunner()
-    print(runner.run(suite))
-
-my_suite()
