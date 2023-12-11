@@ -197,7 +197,7 @@ def start():
                     add_lst = []
                     new_date = get_date(
                         "Please enter the date of the exercise: ")
-                    exercise_name = get_int_input(
+                    exercise_name = input(
                         "Please enter the name of the exercise: ")
                     exercise_set = get_int_input(
                         "Please enter the number of the sets: ")
@@ -319,16 +319,21 @@ def create():
             print("The weight should be numeric, please enter again.")
 
     while True:
+        class InvalidChoiceError(Exception):
+            pass
         gender = input("Please enter the gender['F'/'M']:")
-        if gender not in ["F", "M"]:
-            print("The gender is NOT correct, please check and try again.")
-            continue
-        elif gender == "F":
-            gender = "Female"
-            break
-        else:
-            gender = "Male"
-            break
+        
+        try:
+            if gender == "F":
+                gender = "Female"
+                break
+            elif gender == 'M':
+                gender = "Male"
+                break
+            elif gender not in ["F", "M"]:
+                raise InvalidChoiceError("The gender is NOT correct, please check and try again.")
+        except InvalidChoiceError as err:
+            print(err)
 
     while True:
         purpose = input(
@@ -376,12 +381,17 @@ def get_int_input(prompt):
 
 
 def get_float_input(prompt):
+    class InvalidInputError(Exception):
+        pass
     while True:
         value = input(prompt)
-        if value.replace(".", "", 1).isdigit():
-            return float(value)
-        else:
-            print("The input should be a valid number. Please check and try again.")
+        try:
+            if value.replace(".", "", 1).isdigit():
+                return float(value)
+            else:
+                raise InvalidInputError("The input should be a valid number. Please check and try again.")
+        except InvalidInputError as err:
+            print(err)
 
 
 def get_date(prompt):
