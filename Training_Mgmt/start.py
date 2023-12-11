@@ -20,7 +20,7 @@ def start():
         record_nutrition = record.Record(nutrition_data)
         exercise_record = Exercise_Record.Record(person)
         record_exercise = pd.read_csv(name+"_exercise.csv")
-    except:
+    except FileNotFoundError:
         print('The user does NOT exist')
         check = input(
             "Do you want to create the user?\n[1]: YES\n[q] to quit\n[any] for NO:\nChoice:")
@@ -197,11 +197,11 @@ def start():
                     add_lst = []
                     new_date = get_date(
                         "Please enter the date of the exercise: ")
-                    exercise_name = input(
+                    exercise_name = get_int_input(
                         "Please enter the name of the exercise: ")
-                    exercise_set = input(
+                    exercise_set = get_int_input(
                         "Please enter the number of the sets: ")
-                    exercise_rep = input(
+                    exercise_rep = get_int_input(
                         "Please enter the number of the reps: ")
                     add_lst.append({"date": new_date, "exercise_name": exercise_name,
                                     "exercise_set": exercise_set, "exercise_rep": exercise_rep})
@@ -307,7 +307,7 @@ def create():
         try:
             height = int(height)
             break
-        except:
+        except ValueError:
             print("The height should be numeric, please enter again.")
 
     while True:
@@ -315,7 +315,7 @@ def create():
         try:
             weight = int(weight)
             break
-        except:
+        except ValueError:
             print("The weight should be numeric, please enter again.")
 
     while True:
@@ -361,12 +361,18 @@ def create():
 
 
 def get_int_input(prompt):
+    class InvalidInputError(Exception):
+        pass
+
     while True:
         value = input(prompt)
-        if value.isdigit() or (value.startswith("-") and value[1:].isdigit()):
-            return int(value)
-        else:
-            print("The input should be a valid integer. Please check and try again.")
+        try:
+            if value.isdigit() or (value.startswith("-") and value[1:].isdigit()):
+                return int(value)
+            else:
+                raise InvalidInputError("The input should be a valid integer. Please check and try again.")
+        except InvalidInputError as err:
+            print(err)
 
 
 def get_float_input(prompt):
