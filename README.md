@@ -99,8 +99,8 @@ To use this application, run the `start.py` script. The user will be prompted to
 Please ensure that all dependencies are installed before running the application.
 
 ## How To Use The Package
-`pip install Training_Mgmt`
-`import Training_Mgmt.start`
+`pip install Training_Mgmt` 
+`import Training_Mgmt.start` 
 `Training_Mgmt.start.start()`
 
 ## Credit to
