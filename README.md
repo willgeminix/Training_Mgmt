@@ -1,4 +1,4 @@
-# Training Management Software [![Build Status](https://app.travis-ci.com/willgeminix/Training_Mgmt.svg?token=buDhdVZJqj5j61LpuHjh&branch=main)](https://app.travis-ci.com/willgeminix/Training_Mgmt)
+# [Training Management Software](https://pypi.org/project/Training-Mgmt/) [![Build Status](https://app.travis-ci.com/willgeminix/Training_Mgmt.svg?token=buDhdVZJqj5j61LpuHjh&branch=main)](https://app.travis-ci.com/willgeminix/Training_Mgmt)
 
 
 ## Overview
@@ -97,6 +97,11 @@ To use this application, run the `start.py` script. The user will be prompted to
 
 ## Note
 Please ensure that all dependencies are installed before running the application.
+
+## How To Use The Package
+`pip install Training_Mgmt`
+`import Training_Mgmt.start`
+`Training_Mgmt.start.start()`
 
 ## Credit to
 Xing (Will) Xu
