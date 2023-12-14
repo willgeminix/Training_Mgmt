@@ -300,7 +300,7 @@ def create():
             break
 
     bdate = get_date(
-        "Please enter the birthdate of the newly added record (YYYY-MM-DD):")
+        "Please enter the birthdate of the newly added user (YYYY-MM-DD):")
 
     while True:
         height = input("Please enter the height (cm):")
@@ -322,7 +322,7 @@ def create():
         class InvalidChoiceError(Exception):
             pass
         gender = input("Please enter the gender['F'/'M']:")
-        
+
         try:
             if gender == "F":
                 gender = "Female"
@@ -331,7 +331,8 @@ def create():
                 gender = "Male"
                 break
             elif gender not in ["F", "M"]:
-                raise InvalidChoiceError("The gender is NOT correct, please check and try again.")
+                raise InvalidChoiceError(
+                    "The gender is NOT correct, please check and try again.")
         except InvalidChoiceError as err:
             print(err)
 
@@ -375,7 +376,8 @@ def get_int_input(prompt):
             if value.isdigit() or (value.startswith("-") and value[1:].isdigit()):
                 return int(value)
             else:
-                raise InvalidInputError("The input should be a valid integer. Please check and try again.")
+                raise InvalidInputError(
+                    "The input should be a valid integer. Please check and try again.")
         except InvalidInputError as err:
             print(err)
 
@@ -389,7 +391,8 @@ def get_float_input(prompt):
             if value.replace(".", "", 1).isdigit():
                 return float(value)
             else:
-                raise InvalidInputError("The input should be a valid number. Please check and try again.")
+                raise InvalidInputError(
+                    "The input should be a valid number. Please check and try again.")
         except InvalidInputError as err:
             print(err)
 
